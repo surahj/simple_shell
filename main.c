@@ -13,7 +13,7 @@ int main(int argc, char **argv, char **env)
 	char *buffer = NULL, **command = NULL;
 	size_t buf_size = 0;
 	ssize_t chars_readed = 0;
-	(void)ac;
+	(void)argc;
 
 	while (1)
 	{
@@ -28,10 +28,10 @@ int main(int argc, char **argv, char **env)
 		
 		else
 		{
-			buffer[_strlen(buffer) - 1] = '\0';
+			buffer[strlen(buffer) - 1] = '\0';
 			command = get_token(buffer, " \0");
 			
-			if (_strcmp(command[0], "exit" == 0))
+			if (!(strcmp(command[0], "exit")))
 				exit_shell(command);
 			
 			else
@@ -55,11 +55,11 @@ void exit_shell(char **command)
 	if (command[1] == NULL)
 	{
 		free_command(command);
-		exit(EXIT_SUCCESS);	
+		exit(EXIT_SUCCESS);
 	}
 	
-	code = _atoi(command[1]);
-	free(command);
+	code = atoi(command[1]);
+	free_command(command);
 	exit(code);
 }
 
