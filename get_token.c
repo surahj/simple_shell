@@ -15,7 +15,7 @@ char **get_token(char *buffer, const char *s)
 	if (buffer == NULL)
 		return (NULL);
 
-	bufsize = strlen(buffer);
+	bufsize = _strlen(buffer);
 	commands = malloc((bufsize + 1) * sizeof(char *));
 	if (commands == NULL)
 	{
@@ -28,14 +28,14 @@ char **get_token(char *buffer, const char *s)
 	token = strtok(buffer, s);
 	while (token != NULL)
 	{
-		commands[i] = malloc(strlen(token) + 1);
+		commands[i] = malloc(_strlen(token) + 1);
 		if (commands[i] == NULL)
 		{
 			perror("Unable to allocate buffer");
 			free_command(commands);
 			return (NULL);
 		}
-		strcpy(commands[i], token);
+		_strcpy(commands[i], token);
 		token = strtok(NULL, s);
 		i++;
 	}

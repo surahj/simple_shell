@@ -32,6 +32,14 @@ char **get_token(char *buffer, const char *s);
 void create_child_process(char *name, char **command, char **env);
 
 
-
+/* string functions */
+size_t _strlen(const char *s);
+void *_memcpy(void *dest, const void *src, size_t n);
+char *_strcat(char *dest, const char *src);
+int _strcmp(const char *s1, const char *s2);
+char *_strcpy(char *dest, char *src);
+char *_strcat2(char *dest, char *src, char *s);
+char *_strdup(const char *s);
+int _atoi(const char *s);
 
 #endif
