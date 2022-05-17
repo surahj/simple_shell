@@ -19,21 +19,24 @@ int main(int argc, char **argv, char **env)
 	{
 		prompt();
 		chars_readed = getline(&buffer, &buf_size, stdin);
-		
+
 		if (*buffer == '\n')
 			free(buffer);
 
 		else if (chars_readed == -1)
 			_end_of_file(buffer);
-		
+
 		else
 		{
 			buffer[strlen(buffer) - 1] = '\0';
 			command = get_token(buffer, " \0");
-			
+
 			if (!(strcmp(command[0], "exit")))
 				exit_shell(command);
-			
+
+			else if (!(strcmp(command[0], "env")))
+				print_env(env);
+
 			else
 				create_child_process(argv[0], command, env);
 		}
@@ -57,7 +60,7 @@ void exit_shell(char **command)
 		free_command(command);
 		exit(EXIT_SUCCESS);
 	}
-	
+
 	code = atoi(command[1]);
 	free_command(command);
 	exit(code);
