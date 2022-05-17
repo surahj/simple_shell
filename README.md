@@ -28,16 +28,16 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o shell_lex
 ```
 valgrind --leak-check=full ./shell_lex
 ```
-Invoking:
+# Invoking:
 Shell_lex can be invoked both interactively and non-interactively. If shell_lex is invoked with standard input not connected to a terminal, it reads and executes received commands in order.
-Example:
+-Example:
 ```
 $ echo "echo 'hello'" | ./shell_lex
 'hello'
 $
 ```
 If shell_lex is invoked with standard input connected to a terminal (determined by isatty(3)), an interactive shell is opened. When executing interactively, shell_lex displays the prompt $ when it is ready to read a command.
-Example:
+-Example:
 ```
 $./shell_lex
 $
