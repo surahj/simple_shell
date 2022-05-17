@@ -29,6 +29,7 @@ size_t _strlen(const char *s)
 char *_strcat(char *dest, const char *src)
 {
 	char ch = '/';
+
 	_strncat(dest, &ch, 1);
 
 	int l, j;
@@ -43,6 +44,7 @@ char *_strcat(char *dest, const char *src)
 	{
 		dest[l] = src[j];
 	}
+	dest[l] = '\0';
 	return (dest);
 }
 
