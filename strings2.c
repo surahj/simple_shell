@@ -76,3 +76,30 @@ int _atoi(const char *s)
 		res *= sign;
 	return (res);
 }
+
+/**
+ * _strncat - appends a char to a string,
+ * @dest: string where we want to append.
+ * @src: string with 'n' characters.
+ * @n: number of chars to be appended.
+ * Return: the pointer to dest.
+ */
+char *_strncat(char *dest, const char *src, size_t n)
+{
+	int count = 0, count2 = 0;
+
+	while (*(dest + count) != '\0')
+	{
+		count++;
+	}
+
+	while (count2 < n)
+	{
+		*(dest + count) = *(src + count2);
+		if (*(src + count2) == '\0')
+			break;
+		count++;
+		count2++;
+	}
+	return (dest);
+}

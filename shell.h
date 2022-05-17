@@ -40,5 +40,6 @@ int _strcmp(const char *s1, const char *s2);
 char *_strcpy(char *dest, char *src);
 char *_strdup(const char *s);
 int _atoi(const char *s);
+char *strncat(char *dest, const char *src, size_t n);
 
 #endif
