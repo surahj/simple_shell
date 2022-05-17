@@ -11,14 +11,19 @@ To run this shell with its respective commands its necessary to clone this repos
 git clone https://github.com/surahj/simple_shell.git
 
 - SSH:
-
 git@github.com:surahj/simple_shell.git
 
 # Compiling, Debugging and Runing
 
 - To compile your functions use:
+
+```
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o shell_lex
+```
 
 - for debugging the shell, use valgrind:
-```valgrind --leak-check=full ./shell_lex```
+
+```
+valgrind --leak-check=full ./shell_lex
+```
 
