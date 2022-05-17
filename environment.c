@@ -13,7 +13,7 @@ void print_env(char **env)
 	{
 		len = strlen(env[i]);
 		write(STDOUT_FILENO, env[i], len);
-		write(STDOUT_FILENO, "\n", 1);
+		write(STDOUT_FILENO, "\n", 2);
 		i++;
 	}
 }
