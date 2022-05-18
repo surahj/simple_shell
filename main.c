@@ -14,26 +14,27 @@ int main(int argc, char **argv, char **env)
 	size_t buf_size = 0;
 	ssize_t chars_readed = 0;
 	(void)argc;
+	signal(SIGINT, handle);
 
 	while (1)
 	{
 		prompt();
 		chars_readed = getline(&buffer, &buf_size, stdin);
-		
+
 		if (*buffer == '\n')
 			free(buffer);
 
 		else if (chars_readed == -1)
 			_end_of_file(buffer);
-		
+
 		else
 		{
 			buffer[_strlen(buffer) - 1] = '\0';
 			command = get_token(buffer, " \0");
+
 			
 			if (!(_strcmp(command[0], "exit")))
 				exit_shell(command);
-			
 			else
 				create_child_process(argv[0], command, env);
 		}
@@ -71,7 +72,7 @@ void exit_shell(char **command)
 void prompt(void)
 {
 	if (isatty(STDIN_FILENO))
-		write(STDOUT_FILENO, "#cisfun$ ", 10);
+		write(STDOUT_FILENO, "$ ", 3);
 }
 
 /**
@@ -93,4 +94,15 @@ void _end_of_file(char *buffer)
 
 	free(buffer);
 	exit(EXIT_SUCCESS);
+}
+
+/**
+ * handle - handle Ctr + C signal.
+ * @signals: The signal to handle.
+ * Return: Nothing.
+ */
+void handle(int signals)
+{
+	(void)signals;
+	write(STDOUT_FILENO, "\n$ ", 4);
 }
