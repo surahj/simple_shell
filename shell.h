@@ -21,7 +21,7 @@ void exit_shell(char **command);
 
 void free_command(char **command);
 void exit_failure(char **command);
-
+void msgerror(char *name, char **command);
 
 
 /****************** get_token.c ***********************/
