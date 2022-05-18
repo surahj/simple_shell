@@ -32,7 +32,6 @@ int main(int argc, char **argv, char **env)
 			buffer[_strlen(buffer) - 1] = '\0';
 			command = get_token(buffer, " \0");
 
-			
 			if (!(_strcmp(command[0], "exit")))
 				exit_shell(command);
 			else
@@ -58,7 +57,7 @@ void exit_shell(char **command)
 		free_command(command);
 		exit(EXIT_SUCCESS);
 	}
-	
+
 	code = _atoi(command[1]);
 	free_command(command);
 	exit(code);
