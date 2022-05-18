@@ -107,16 +107,3 @@ char **get_path(char **env)
 	}
 	return (NULL);
 }
-
-char *_strcat(char *dest, char *src)
-{
-	char *temp = dest;
-
-	while (*dest)
-		dest++;
-
-	*dest++ = '/';
-	while (*src)
-		*dest++ = *src++;
-	return (temp);
-}

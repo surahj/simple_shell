@@ -95,6 +95,11 @@ void _end_of_file(char *buffer)
 	exit(EXIT_SUCCESS);
 }
 
+/**
+ * handle - handle Ctr + C signal.
+ * @signals: The signal to handle.
+ * Return: Nothing.
+ */
 void handle(int signals)
 {
 	(void)signals;
