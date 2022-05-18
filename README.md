@@ -59,7 +59,7 @@ $ echo "echo $HOME" | ./shell_lex
 /home/vagrant
 ```
 
-#PWD
+# PWD
 The current working directory as set by the cd command.
 ```
 $ echo "echo $PWD" | ./shell_lex
@@ -82,7 +82,7 @@ The second $ is substitued with the current process ID.
 
 - Example:
 ```
-$ echo "echo $$" | ./shellby
+$ echo "echo $$" | ./shell_lex
 9632
 ```
 # exit
@@ -92,7 +92,7 @@ The STATUS argument is the integer used to exit the shell.
 If no argument is given, the command is interpreted as exit 0.
 - Example:
 ```
-$ ./shellby
+$ ./shell_lex
 $ exit
 ```
 # env
@@ -100,7 +100,7 @@ Usage: env
 Prints the current environment.
 - Example:
 ```
-$ ./shellby
+$ ./shell_lex
 $ env
 NVM_DIR=/home/vagrant/.nvm
 ...
