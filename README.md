@@ -106,5 +106,5 @@ NVM_DIR=/home/vagrant/.nvm
 ...
 ```
 # Authors
-- Alexander Ubaka
-- Surajudeen Odebode - [saurahj](https://github.com/surahj)
+- Alexander Ubaka - [Zandarh](https://github.com/Zandarh)
+- Surajudeen Odebode - [surahj](https://github.com/surahj)
