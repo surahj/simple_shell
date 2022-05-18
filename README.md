@@ -54,5 +54,57 @@ Upon invocation, shell_lex receives and copies the environment of the parent pro
 # Home
 The home directory of the current user and the default directory argument for the cd builtin command.
 
+```
+$ echo "echo $HOME" | ./shell_lex
+/home/vagrant
+```
 
+#PWD
+The current working directory as set by the cd command.
+```
+$ echo "echo $PWD" | ./shell_lex
+/home/vagrant/alx/simple_shell
+```
 
+# Variable Replacement
+shell_lex interprets the $ character for variable replacement.
+
+# $?
+? is substitued with the return value of the last program executed.
+
+- Example:
+```
+$ echo "echo $?" | ./shell_lex
+0
+```
+# $$
+The second $ is substitued with the current process ID.
+
+- Example:
+```
+$ echo "echo $$" | ./shellby
+9632
+```
+# exit
+Usage: exit [STATUS]
+Exits the shell.
+The STATUS argument is the integer used to exit the shell.
+If no argument is given, the command is interpreted as exit 0.
+- Example:
+```
+$ ./shellby
+$ exit
+```
+# env
+Usage: env
+Prints the current environment.
+- Example:
+```
+$ ./shellby
+$ env
+NVM_DIR=/home/vagrant/.nvm
+...
+```
+# Authors
+- Alexander Ubaka
+- Surajudeen Odebode <surahj>
