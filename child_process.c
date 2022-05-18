@@ -13,7 +13,7 @@ void create_child_process(char *name, char **command, char **env)
 	int status = 0;
 	int waitpid_error = 0;
 
-	if (!(strcmp(command[0], "env")))
+	if (!(_strcmp(command[0], "env")))
 		print_env(env);
 
 	pid = fork();
@@ -98,7 +98,7 @@ char **get_path(char **env)
 	pathvalue = strtok(env[i], "=");
 	while (env[i])
 	{
-		if (!(strcmp(pathvalue, "PATH")))
+		if (!(_strcmp(pathvalue, "PATH")))
 		{
 			pathvalue = strtok(NULL, "\n");
 			all_path = get_token(pathvalue, ":");

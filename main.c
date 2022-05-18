@@ -29,10 +29,10 @@ int main(int argc, char **argv, char **env)
 
 		else
 		{
-			buffer[strlen(buffer) - 1] = '\0';
+			buffer[_strlen(buffer) - 1] = '\0';
 			command = get_token(buffer, " \0");
 
-			if (!(strcmp(command[0], "exit")))
+			if (!(_strcmp(command[0], "exit")))
 				exit_shell(command);
 			else
 				create_child_process(argv[0], command, env);
@@ -61,7 +61,7 @@ void exit_shell(char **command)
 		exit(EXIT_SUCCESS);
 	}
 
-	code = atoi(command[1]);
+	code = _atoi(command[1]);
 	free_command(command);
 	exit(code);
 }

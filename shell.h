@@ -40,7 +40,16 @@ void execute(char *name, char **command, char **env);
 
 /**************** environment.c ***********************/
 void print_env(char **env);
-
-
 char *_strcat(char *dest, char *src);
+
+/* string functions */
+size_t _strlen(const char *s);
+void *_memcpy(void *dest, const void *src, size_t n);
+char *_strcat(char *dest, char *src);
+int _strcmp(const char *s1, const char *s2);
+char *_strcpy(char *dest, char *src);
+char *_strdup(const char *s);
+int _atoi(const char *s);
+char *strncat(char *dest, const char *src, size_t n);
+
 #endif
