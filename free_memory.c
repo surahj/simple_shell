@@ -25,7 +25,7 @@ void free_command(char **command)
 
 
 /**
- * free_exit - A function that frees all the memory allocated and exit.
+ * exit_failure - A function that frees all the memory allocated and exit.
  * @command: The pointer to allocated command memory to free.
  * Return: Nothing.
  */

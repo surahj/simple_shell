@@ -35,12 +35,12 @@ char **get_token(char *buffer, const char *s);
 /***************** child_process.c ************************/
 
 void create_child_process(char *name, char **command, char **env);
-
-
+char **get_path(char **env);
+void execute(char *name, char **command, char **env);
 
 /**************** environment.c ***********************/
 void print_env(char **env);
 
 
-
+char *_strcat(char *dest, char *src);
 #endif
