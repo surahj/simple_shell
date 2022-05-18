@@ -26,26 +26,17 @@ size_t _strlen(const char *s)
 * Return: concatenated string
 */
 
-char *_strcat(char *dest, const char *src)
+char *_strcat(char *dest, char *src)
 {
-	char ch = '/';
+	char *temp = dest;
 
-	_strncat(dest, &ch, 1);
+	while (*dest)
+		dest++;
 
-	int l, j;
-
-	l = 0;
-
-	while (dest[l] != '\0')
-	{
-		++l;
-	}
-	for (j = 0; src[j] != '\0'; j++, ++l)
-	{
-		dest[l] = src[j];
-	}
-	dest[l] = '\0';
-	return (dest);
+	*dest++ = '/';
+	while (*src)
+		*dest++ = *src++;
+	return (temp);
 }
 
 /**
