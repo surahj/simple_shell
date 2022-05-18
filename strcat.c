@@ -16,16 +16,3 @@ char *_strcat(char *dest, char *src)
 		*dest++ = *src++;
 	return (temp);
 }
-
-char *_strcat(char *dest, char *src)
-{
-	char *temp = dest;
-
-	while (*dest)
-		dest++;
-
-	*dest++ = '/';
-	while (*src)
-		*dest++ = *src++;
-	return (temp);
-}
