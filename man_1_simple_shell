@@ -1,0 +1,88 @@
+.TH SHELL_LEX 1 "may 2022" "ALX" "0x16. C - Simple Shell"
+.SH NAME
+.B shell_lex\fR \- simple UNIX command interpreter
+.SH SYNOPSIS
+.B shell_lex\fR [\fIfilename\fR]
+.SH DESCRIPTION
+.B shell_lex\fR is a simple UNIX command language interpreter that reads commands from either a file or standard input and executes them.
+
+.B Invocation
+.in +2n
+\fBshell_lex\fR can be invoked both interactively and non-interactively.
+If \fBshell_lex\fR is invoked with standard input not connected to a terminal, it reads and executes received commands in order.
+
+If \fBshell_lex\fR is invoked with standard input connected to a terminal (determined by \fIisatty(3)\fR), an \fIinteractive\fR shell is opened.
+When executing interactively, \fBshell_lex\fR displays the prompt \fI$ \fR when it is ready to read a command.
+
+Alternatively, if command line arguments are supplied upon invocation, \fBshell_lex\fR treats the first argument as a file from which to read commands.
+The supplied file should contain one command per line.
+.B shell_lex\fR runs each of the commands contained in the file in order before exiting.
+.in
+
+.B Environment
+.in +2n
+Upon invocation, \fBshell_lex\fR receives and copies the environment of the parent process in which it was exeucted.
+This \fBenvironment\fR is an array of \fIname-value\fR strings describing variables in the format \fINAME=VALUE\fR.
+.in
+
+.B Command Execution
+.in +2n
+After receiving a command, \fBshell_lex\fR tokenizes it into words using \fB" "\fR as a delimiter.
+The first word is considered the command and all remaining words are considered arguments to that command.
+.B shell_lex\fR then proceeds with the following actions:
+
+.B Exit Status
+.in +2n
+.B shell_lex\fR The STATUS argument is the integer used to exit the shell.
+If no argument is given, the command is interpreted as exit 0.
+
+All builtins return zero on success and otherwise incorrect usage (indicated by a corresponding error message).
+.in
+
+.B Signals
+.in +2n
+While running in interactive mode, \fBshell_lex\fR ignores the keyboard input \fBCtrl+c\fR.
+Alternatively, an input of end-of-file (\fBCtrl+d\fR) will exit the program.
+.in
+
+.B Variable Replacement
+.in +2n
+.B shell_lex\fR interprets the \fI$\fR character for variable replacement:
+
+.RS
+.B $ENV_VARIABLE\fR	\fIENV_VARIABLE\fR is subsituted with its value.
+.RE
+
+.RS
+.B $?\fR			\fI?\fR is substituted with the return value of the last program executed.
+.RE
+
+.RS
+.B $$\FR			The second \fI$\fR is substituted with the current process ID.
+.RE
+
+.B Comments
+.in +2n
+.B shell_lex\fR ignores all words and characters preceeded by a \fI#\fR character on a line.
+.in
+
+
+.B shell_lex Builtin Commands
+.in +2n
+
+
+.B env
+.RS
+Usage: \fBenv\fR
+
+Prints the current environment.
+.RE
+
+
+.SH SEE ALSO
+access(2), chdir(2), execve(2), _exit(2), exit(3), fflush(3), fork(2), free(3), isatty(3), getcwd(3), malloc(3), open(2), read(2), sh(1), signal(2), stat(2), wait(2), write(2)
+
+.B shell_lex\fR emulates basic functionality of the \fBsh\fR shell.
+This man page borrows from the corresponding man pages sh(1) and dash(1).
+.SH AUTHOR
+ALexander Ubaka and Surajudeen Odebode

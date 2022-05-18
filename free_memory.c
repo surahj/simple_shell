@@ -47,3 +47,17 @@ void exit_failure(char **command)
 	free(command);
 	exit(EXIT_FAILURE);
 }
+
+/**
+ * msgerror - prints message not found.
+ * @name: The name of the shell.
+ * @command: The pointer to tokenized command.
+ * Return: Nothing.
+ */
+void msgerror(char *name, char **command)
+{
+	write(STDOUT_FILENO, name, strlen(name));
+	write(STDOUT_FILENO, ": ", 3);
+	write(STDOUT_FILENO, command[0], strlen(command[0]));
+	write(STDOUT_FILENO, ": not found\n", 13);
+}

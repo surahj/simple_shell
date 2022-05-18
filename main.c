@@ -40,6 +40,9 @@ int main(int argc, char **argv, char **env)
 		fflush(stdin);
 		buffer = NULL;
 	}
+	if (chars_readed == -1)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 /**

@@ -63,6 +63,7 @@ void execute(char *name, char **command, char **env)
 	{
 		all_path = get_path(env);
 
+
 		while (all_path[i])
 		{
 			command_path = _strcat(all_path[i], command[0]);
@@ -78,6 +79,7 @@ void execute(char *name, char **command, char **env)
 				return;
 			}
 		}
+		msgerror(name, command);
 		free_command(all_path);
 	}
 }
