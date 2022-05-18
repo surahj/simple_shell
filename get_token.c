@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * tokening - A function that split and create a full string command.
+ * get_token - A function that split and create a full string command.
  * @s: The delimiter for strtok.
  * @buffer: The pointer to input string.
  * Return: A string with full command.
