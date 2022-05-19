@@ -16,7 +16,8 @@ void help_env(void)
 }
 
 /**
- * help_setenv - Displays information on the shell_lex builtin command 'setenv'.
+ * help_setenv - Displays information on the shell_lex
+ * builtin command 'setenv'.
  */
 void help_setenv(void)
 {
