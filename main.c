@@ -1,110 +1,134 @@
 #include "shell.h"
 
-/**
- * main - it initialize our shell
- * @argc: The number of imputted argument
- * @argv: pointer to array of inputted argument
- * @env: pointer to enviromnet variables
- * Return: Always 0.
- */
+void sig_handler(int sig);
+int execute(char **args, char **front);
 
-int main(int argc, char **argv, char **env)
+/**
+ * sig_handler - Prints a new prompt upon a signal.
+ * @sig: The signal.
+ */
+void sig_handler(int sig)
 {
-	char *buffer = NULL, **command = NULL;
-	size_t buf_size = 0;
-	ssize_t chars_readed = 0;
-	(void)argc;
-	signal(SIGINT, handle);
+	char *new_prompt = "\n$ ";
+
+	(void)sig;
+	signal(SIGINT, sig_handler);
+	write(STDIN_FILENO, new_prompt, 3);
+}
+
+/**
+ * execute - Executes a command in a child process.
+ * @args: An array of arguments.
+ * @front: A double pointer to the beginning of args.
+ *
+ * Return: If an error occurs - a corresponding error code.
+ *         O/w - The exit value of the last executed command.
+ */
+int execute(char **args, char **front)
+{
+	pid_t child_pid;
+	int status, flag = 0, ret = 0;
+	char *command = args[0];
+
+	if (command[0] != '/' && command[0] != '.')
+	{
+		flag = 1;
+		command = get_location(command);
+	}
+
+	if (!command || (access(command, F_OK) == -1))
+	{
+		if (errno == EACCES)
+			ret = (create_error(args, 126));
+		else
+			ret = (create_error(args, 127));
+	}
+	else
+	{
+		child_pid = fork();
+		if (child_pid == -1)
+		{
+			if (flag)
+				free(command);
+			perror("Error child:");
+			return (1);
+		}
+		if (child_pid == 0)
+		{
+			execve(command, args, environ);
+			if (errno == EACCES)
+				ret = (create_error(args, 126));
+			free_env();
+			free_args(args, front);
+			free_alias_list(aliases);
+			_exit(ret);
+		}
+		else
+		{
+			wait(&status);
+			ret = WEXITSTATUS(status);
+		}
+	}
+	if (flag)
+		free(command);
+	return (ret);
+}
+
+/**
+ * main - Runs a simple UNIX command interpreter.
+ * @argc: The number of arguments supplied to the program.
+ * @argv: An array of pointers to the arguments.
+ *
+ * Return: The return value of the last executed command.
+ */
+int main(int argc, char *argv[])
+{
+	int ret = 0, retn;
+	int *exe_ret = &retn;
+	char *prompt = "$ ", *new_line = "\n";
+
+	name = argv[0];
+	hist = 1;
+	aliases = NULL;
+	signal(SIGINT, sig_handler);
+
+	*exe_ret = 0;
+	environ = _copyenv();
+	if (!environ)
+		exit(-100);
+
+	if (argc != 1)
+	{
+		ret = proc_file_commands(argv[1], exe_ret);
+		free_env();
+		free_alias_list(aliases);
+		return (*exe_ret);
+	}
+
+	if (!isatty(STDIN_FILENO))
+	{
+		while (ret != END_OF_FILE && ret != EXIT)
+			ret = handle_args(exe_ret);
+		free_env();
+		free_alias_list(aliases);
+		return (*exe_ret);
+	}
 
 	while (1)
 	{
-		prompt();
-		chars_readed = getline(&buffer, &buf_size, stdin);
-
-		if (*buffer == '\n')
-			free(buffer);
-
-		else if (chars_readed == -1)
-			_end_of_file(buffer);
-
-		else
+		write(STDOUT_FILENO, prompt, 2);
+		ret = handle_args(exe_ret);
+		if (ret == END_OF_FILE || ret == EXIT)
 		{
-			buffer[_strlen(buffer) - 1] = '\0';
-			command = get_token(buffer, " \0");
-
-			if (!(_strcmp(command[0], "exit")))
-				exit_shell(command);
-			else
-				create_child_process(argv[0], command, env);
+			if (ret == END_OF_FILE)
+				write(STDOUT_FILENO, new_line, 1);
+			free_env();
+			free_alias_list(aliases);
+			exit(*exe_ret);
 		}
-		fflush(stdin);
-		buffer = NULL;
-	}
-	if (chars_readed == -1)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
-/**
- * exit_shell - exit a shell
- * @command: pointer to exit command
- * Return: nothing
- */
-
-void exit_shell(char **command)
-{
-	int code = 0;
-
-	if (command[1] == NULL)
-	{
-		free_command(command);
-		exit(EXIT_SUCCESS);
 	}
 
-	code = _atoi(command[1]);
-	free_command(command);
-	exit(code);
-}
-
-/**
- * prompt - A function that prints the prompt
- * Return: Nothing.
- */
-
-void prompt(void)
-{
-	if (isatty(STDIN_FILENO))
-		write(STDOUT_FILENO, "$ ", 3);
-}
-
-/**
- * _end_of_file - checcks if buffer is EOF
- * @buffer: buffer to check
- * Return: nothing
- */
-
-void _end_of_file(char *buffer)
-{
-	if (buffer)
-	{
-		free(buffer);
-		buffer = NULL;
-	}
-
-	if (isatty(STDIN_FILENO))
-		write(STDOUT_FILENO, "\n", 2);
-
-	free(buffer);
-	exit(EXIT_SUCCESS);
-}
-
-/**
- * handle - handle Ctr + C signal.
- * @signals: The signal to handle.
- * Return: Nothing.
- */
-void handle(int signals)
-{
-	(void)signals;
-	write(STDOUT_FILENO, "\n$ ", 4);
+	free_env();
+	free_alias_list(aliases);
+	return (*exe_ret);
 }
